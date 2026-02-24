@@ -111,16 +111,16 @@ export function hintNavJsonChangeThenPanic(
 ): void {
   if (
     metaJson.some(i => {
-      return (
+      // Skip custom-link format (v2 new format)
+      if (
         typeof i === 'object' &&
-        ('activeMatch' in i ||
-          'text' in i ||
-          'link' in i ||
-          'items' in i ||
-          'icon' in i ||
-          'ariaLabel' in i ||
-          'target' in i)
-      );
+        'type' in i &&
+        (i as any).type === 'custom-link'
+      ) {
+        return false;
+      }
+      // Only panic for old v1 nav config
+      return typeof i === 'object' && ('activeMatch' in i || 'text' in i);
     })
   ) {
     const error = new Error(
