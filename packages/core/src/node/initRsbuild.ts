@@ -10,6 +10,7 @@ import type {
 import { PLUGIN_REACT_NAME, pluginReact } from '@rsbuild/plugin-react';
 import { version as rspressVersion } from '@rspress/core/package.json';
 import {
+  addTrailingSlash,
   MDX_OR_MD_REGEXP,
   removeTrailingSlash,
   type UserConfig,
@@ -95,12 +96,12 @@ async function createInternalBuildConfig(
     : path.join(cwd(), config.themeDir!);
   const outDir = config?.outDir ?? OUTPUT_DIR;
 
-  const base = config?.base ?? '';
+  const base = config?.base ?? '/';
 
   // In production, we need to add assetPrefix in asset path
   const assetPrefix = isProduction()
-    ? removeTrailingSlash(config?.builderConfig?.output?.assetPrefix ?? base)
-    : '';
+    ? addTrailingSlash(config?.builderConfig?.output?.assetPrefix ?? base)
+    : '/';
 
   const normalizeIcon = (icon: string | URL | undefined) => {
     if (!icon) {
