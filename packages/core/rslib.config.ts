@@ -20,8 +20,12 @@ const COMMON_EXTERNALS = [
   '@rspress/core/runtime',
   '@rspress/core/theme',
   '@rspress/core/shiki-transformers',
-  '@rspress/core/_private/react',
   '@rspress/shared',
+  // react
+  'react',
+  'react-dom',
+  'react-reconciler',
+  'react-router-dom',
 ];
 
 export default defineConfig({
@@ -64,22 +68,6 @@ export default defineConfig({
               };
             }
           });
-        },
-      },
-    },
-    {
-      bundle: false,
-      dts: false,
-      format: 'esm',
-      syntax: 'es2022',
-      source: {
-        entry: {
-          index: './src/node/ssg-md/react/*.ts',
-        },
-      },
-      output: {
-        distPath: {
-          root: './dist/_private/react',
         },
       },
     },
